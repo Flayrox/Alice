@@ -145,7 +145,7 @@ console.log("MusicBOT by Sworder#4220");
             }
         if (message.content.startsWith(prefix + 'help')) {
 message.reply("Check your dm's");
-message.author.send("```Prefix = "&"\nplay - for playing\npause - for pause music\nresume - for resume music\nskip - for skip music\nqueue - for watch the queue\nclearQ - for clear the queue");
+message.author.send("```Prefix = "&"\nplay - for playing\npause - for pause music\nresume - for resume music\nskip - for skip music\nqueue - for watch the queue\nclearQ - for clear the queue```");
 }
         if (message.content.startsWith(prefix + 'play')) {
 
