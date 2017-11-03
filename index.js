@@ -9,6 +9,7 @@ var rs = new RedisSessions();
 var ffmpeg = require("ffmpeg");
 var search = require('youtube-search');
 var prefix = "&";
+var con = console.log;
 var moment = require("moment");
 var config = {   
             "youtube_api_key" : process.env.YOUTUBE_API_KEY,
@@ -80,7 +81,7 @@ message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(
         } else if (queue.length != 0) {
             
         message.channel.send("**:notes: Now playing - ** `" + queue[0].title + "`** | Requested by ** `" + queue[0].requested + "`");
-            con(`Lecture ${queue[0].title} demandé par ${queue[0].requested} dans ${message.guild.name}`);
+         console.log(`Lecture ${queue[0].title} demandé par ${queue[0].requested} dans ${message.guild.name}`);
             let connection = message.guild.voiceConnection
             if (!connection) return con("no connexion!");
             intent = connection.playStream(queue[0].toplay)
