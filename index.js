@@ -70,7 +70,7 @@ function play(message, queue, song) {
             
                 console.log("Queued " + queue[queue.length - 1].title + " dans " + message.guild.name + " as requested by " + queue[queue.length - 1].requested)
             
-message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(7) + "`");
+message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(6) + "`");
                 message.channel.send("**:ballot_box_with_check: Add to queue - ** `" + queue[queue.length - 1].title + "`");
                 if (test) {
                     setTimeout(function() {
