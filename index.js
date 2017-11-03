@@ -46,15 +46,14 @@ app.get("/queue/:guildid",function(req,res){
   res.send(text)
 })
         
-
-var paused = {}
+var paused = {};
 function play(message, queue, song) {
     try {
         if (!message || !queue) return;
         if (song) {
             search(song, opts, function(err, results) {
-                
-                if (err) return message.channel.send("Video not found please try to use a youtube link instead.");
+               
+                if (err) return message.channel.send("Video not found please try to use a youtube link instead."); 
                 
                 song = (song.includes("https://" || "http://")) ? song : results[0].link
                 let stream = ytdl(song, {
@@ -68,6 +67,7 @@ function play(message, queue, song) {
                     "toplay": stream
                 })
             
+                console.log("Queued " + queue[queue.length - 1].title + " dans " + message.guild.name + " as requested by " + queue[queue.length - 1].requested)
             
 message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(7) + "`");
                 message.channel.send("**:ballot_box_with_check: Add to queue - ** `" + queue[queue.length - 1].title + "`");
@@ -80,6 +80,7 @@ message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(
         } else if (queue.length != 0) {
             
         message.channel.send("**:notes: Now playing - ** `" + queue[0].title + "`** | Requested by ** `" + queue[0].requested + "`");
+            con(`Lecture ${queue[0].title} demandé par ${queue[0].requested} dans ${message.guild.name}`);
             let connection = message.guild.voiceConnection
             if (!connection) return con("no connexion!");
             intent = connection.playStream(queue[0].toplay)
@@ -93,24 +94,22 @@ message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(
                 queue.shift()
                 play(message, queue)
             })
-            }
-        } else {
             
-            message.channel.send('No more music in queue!')
+        } else {
+            message.channel.send("No more music in queue!")
             
         }
     } catch (err) {
-        
-        con("Error\n\n" + err.stack)
+        console.log("Error\n\n" + err.stack)
         errorlog[String(Object.keys(errorlog).length)] = {
             "code": err.code,
             "error": err,
             "stack": err.stack
         }
-        fs.writeFile("./data/errors.json", JSON.stringify(errorlog), function(err) {
+        fs.writeFile("./errors.json", JSON.stringify(errorlog), function(err) {
             if (err) return con("Error");
         });
-        }
+        
 
     }
 }
