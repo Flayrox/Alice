@@ -146,8 +146,26 @@ console.log("MusicBOT by Sworder#4220");
             }
         if (message.content.startsWith(prefix + 'help')) {
 message.reply("Check your dm's");
-message.author.send("```Prefix = '&'\nplay - for playing\npause - for pause music\nresume - for resume music\nskip - for skip music\nqueue - for watch the queue\nclearQ - for clear the queue```");
+message.author.send("```Prefix = '&'\n\n play - for playing\n pause - for pause music\n resume - for resume music\n skip - for skip music\n queue - for watch the queue\n clearQ - for clear the queue```");
 }
+	if (message.content.startsWith(prefix + "logout")) {
+
+     if(message.author.id == "240508683455299584"){
+
+      message.reply("Arrêt en cour");
+
+        console.log('/ Je suis désormais offline / ');
+
+        client.destroy();
+
+        process.exit()
+
+    } else {
+
+      message.channel.send("**Erreur** ! Tu n'es pas l'owner")
+
+    }
+  }    
         if (message.content.startsWith(prefix + 'play')) {
 
             if (!message.guild.voiceConnection) {
