@@ -250,7 +250,7 @@ var player = message.guild.voiceConnection.player.dispatcher
                 if (players.playing) return message.channel.send('The music is already playing').then(response => { response.delete(5000) });
                 
                 var queue = getQueue(message.guild.id);
-                let players = message.guild.voiceConnection.player.dispatcher
+           
                 players.resume();
                 
                 message.channel.send(":arrow_forward: **Resuming music...**").then(response => { response.delete(5000) });
