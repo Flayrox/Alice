@@ -42,8 +42,7 @@ app.get("/queue/:guildid",function(req,res){
     if(queue.length == 0) return res.send("Uh oh... No music!");
     let text = '';
     for(let i = 0; i < queue.length; i++){
-      text += `${(i + 1)}. ${queue[i].title} | by ${queue[i].requested}\n`
-    };
+      text += `${(i + 1)}. ${queue[i].title} | by ${queue[i].requested}\n`    };
   res.send(text)
 })
         
@@ -68,7 +67,7 @@ function play(message, queue, song) {
                     "toplay": stream
                 })
             
-                console.log("Queued " + queue[queue.length - 1].title + " dans " + message.guild.name + " as requested by " + queue[queue.length - 1].requested)
+                console.log("Queued " + queue[queue.length - 1].title + " in " + message.guild.name + " as requested by " + queue[queue.length - 1].requested)
             
 message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(6) + "`");
                 message.channel.send("**:ballot_box_with_check: Add to queue - ** `" + queue[queue.length - 1].title + "`");
@@ -81,7 +80,7 @@ message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(
         } else if (queue.length != 0) {
             
         message.channel.send("**:notes: Now playing - ** `" + queue[0].title + "`** | Requested by ** `" + queue[0].requested + "`");
-         console.log(`Lecture ${queue[0].title} demandé par ${queue[0].requested} dans ${message.guild.name}`);
+n         console.log(`Lecture ${queue[0].title} Requested byr ${queue[0].requested} i ${message.guild.name}`);
             let connection = message.guild.voiceConnection
             if (!connection) return con("no connexion!");
             intent = connection.playStream(queue[0].toplay)
@@ -152,9 +151,7 @@ message.author.send("```Prefix = '&'\n\n play - for playing\n pause - for pause 
 
      if(message.author.id == "240508683455299584"){
 
-      message.reply("Arrêt en cour");
-
-        console.log('/ Je suis désormais offline / ');
+        console.log('Offline now');
 
         client.destroy();
 
@@ -162,7 +159,7 @@ message.author.send("```Prefix = '&'\n\n play - for playing\n pause - for pause 
 
     } else {
 
-      message.channel.send("**Erreur** ! Tu n'es pas l'owner")
+      message.channel.send("**Erreur** ! You are not owner")
 
     }
   }    
@@ -275,15 +272,7 @@ var player = message.guild.voiceConnection.player.dispatcher
                 message.channel.send(":arrow_forward: **Resuming music...**").then(response => { response.delete(5000) });
                 
             } 
-        
-
-        if (message.content.startsWith(prefix + 'nplay') || message.content.startsWith(prefix + 'nplay')) {
-           let queue = getQueue(message.guild.id);
-            
-            if (queue.length == 0) return message.channel.send(message, "No music in queue"); 
-            message.channel.send("**:arrow_forward: Now playing - ** `" + queue[0].title + "`** | Requested by ** `" + queue[0].requested + "`");
-            
-        }
+      
 
         if (message.content.startsWith(prefix + 'queue')) {
           let queue = getQueue(message.guild.id);
