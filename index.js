@@ -80,7 +80,7 @@ message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(
         } else if (queue.length != 0) {
             
         message.channel.send("**:notes: Now playing - ** `" + queue[0].title + "`** | Requested by ** `" + queue[0].requested + "`");
-n         console.log(`Lecture ${queue[0].title} Requested byr ${queue[0].requested} i ${message.guild.name}`);
+      console.log(`Lecture ${queue[0].title} Requested byr ${queue[0].requested} i ${message.guild.name}`);
             let connection = message.guild.voiceConnection
             if (!connection) return con("no connexion!");
             intent = connection.playStream(queue[0].toplay)
@@ -133,7 +133,7 @@ console.log("MusicBOT by Sworder#4220");
 
 
             client.on("message", function(message) {
-    const messagea = message.content;
+    const messagea = message.content
     try {
 		if (message.channel.type === "dm") return;
         if (message.author === client.user)
