@@ -308,7 +308,7 @@ if(message.author.id == "240508683455299584"){
   }
 }   
 		   if (message.content.startsWith(prefix + "ping")) {
-message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Date.now() - startTime}**`);
+message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Date.now() - startTime}**`));
 } 
 });
 
