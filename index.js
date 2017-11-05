@@ -300,6 +300,16 @@ var player = message.guild.voiceConnection.player.dispatcher
 
 
     } 
+		if(message.content.startsWith(prefix + 'rename')){
+if(message.author.id == "240508683455299584"){
+	client.user.setUsername(message.content.substr(8));
+} else {
+    message.channel.send("You do not have permission to use this command!")
+  }
+}   
+		   if (message.content.startsWith(prefix + "ping")) {
+message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Date.now() - startTime}**`);
+} 
 });
 
 
