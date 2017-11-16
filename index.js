@@ -90,9 +90,14 @@ message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(
                 play(message, queue)
             })
 
-            intent.on('end', () => {
-                queue.shift()
-                play(message, queue)
+            intent.on('end', () => {	
+       setTimeout(() => {
+          if (queue.length > 0) { 
+              queue.shift()
+       play(message, queue) 
+              } 
+       }, 1000)
+
             })
             
         } else {
