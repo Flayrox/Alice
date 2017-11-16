@@ -64,9 +64,10 @@ function play(message, queue, song) {
                 queue.push({
                     "title": results[0].title,
                     "requested": message.author.username,
-                    "toplay": stream
+                    "toplay": stream,
+		"link": results[0].link,
                 })
-            
+      
                 console.log("Queued " + queue[queue.length - 1].title + " in " + message.guild.name + " as requested by " + queue[queue.length - 1].requested)
             
 message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(6) + "`");
@@ -79,7 +80,7 @@ message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(
             })
         } else if (queue.length != 0) {
             
-        message.channel.send("**:notes: Now playing - ** `" + queue[0].title + "`** | Requested by ** `" + queue[0].requested + "`");
+        message.channel.send("**:notes: Now playing - ** `" + queue[0].title + "`** | Requested by ** `" + queue[0].requested + "`" + "\n" + queue[0].link);
       console.log(`Lecture ${queue[0].title} Requested byr ${queue[0].requested} i ${message.guild.name}`);
             let connection = message.guild.voiceConnection
             if (!connection) return con("no connexion!");
