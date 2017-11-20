@@ -151,7 +151,7 @@ console.log("MusicBOT by Sworder#4220");
             }
         if (message.content.startsWith(prefix + 'help')) {
 message.reply("Check your dm's");
-message.author.send("```Prefix = '&'\n\n play - for playing\n pause - for pause music\n resume - for resume music\n skip - for skip music\n queue - for watch the queue\n clearQ - for clear the queue```");
+message.author.send("```Prefix = '&'\n\n play - for playing\n pause - for pause music\n resume - for resume music\n skip - for skip music\n queue - for watch the queue\n clearQ - for clear the queue\nyoutube-search - for find more information about a video```");
 }
 	if (message.content.startsWith(prefix + "logout")) {
 
@@ -314,8 +314,27 @@ if(message.author.id == "240508683455299584"){
   }
 }   
 		   if (message.content.startsWith(prefix + "ping")) {
-message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Date.now() - startTime}**`));
+message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Math.round(client.ping).toFixed(0)}**`));
 } 
+	if (message.content.startsWith(prefix + "youtube-search")) {
+var args = message.content.split(" ")[1];
+const searchvideo = require("request-promise-native");
+if (!args) return message.channel.send("**:x: Error, please specify a title of video**");
+searchvideo("https://www.googleapis.com/youtube/v3/search?q="+encodeURIComponent(args)+"&type=video&part=snippet&key="+config.youtube_api_key).then(objet => { 
+let ytvideo = JSON.parse(objet);
+ if (ytvideo.pageInfo.totalResults === 0) return message.channel.send("**:x: I can't find this video**"); searchvideo("https://www.googleapis.com/youtube/v3/videos?id="+ytvideo.items[0].id.videoId+"&part=contentDetails&key="+config.youtube_api_key).then(info => { 
+let videoInfo = JSON.parse(info);
+var embed = new Discord.RichEmbed()
+.setAuthor(ytvideo.items[0].snippet.channelTitle) 
+.setTitle(ytvideo.items[0].snippet.title) 
+.setURL("https://www.youtube.com/watch?v="+ytvideo.items[0].id.videoId)
+.setColor(0xff0000) 
+.setThumbnail("https://www.egedeniztextile.com/wp-content/uploads/2017/09/Youtube-logo-2017.png")  
+.setDescription(ytvideo.items[0].snippet.description ? ytvideo.items[0].snippet.description : "null")
+.addField("Duration", videoInfo.items[0].contentDetails.duration.toString().replace(/["PT", "S"]/g, "").replace("H", ":").replace("M", ":"), true)
+.addField("URL", "https://www.youtube.com/watch?v="+ytvideo.items[0].id.videoId);
+ return message.channel.send(embed); }); });
+} 	    
 });
 
 
