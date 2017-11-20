@@ -151,7 +151,7 @@ console.log("MusicBOT by Sworder#4220");
             }
         if (message.content.startsWith(prefix + 'help')) {
 message.reply("Check your dm's");
-message.author.send("```Prefix = '&'\n\n play - for playing\n pause - for pause music\n resume - for resume music\n skip - for skip music\n queue - for watch the queue\n clearQ - for clear the queue\nyoutube-search - for find more information about a video```");
+message.author.send("```Prefix = '&'\n\n play - for playing\n pause - for pause music\n resume - for resume music\n skip - for skip music\n queue - for watch the queue\n clearQ - for clear the queue\n youtube-search - for find more information about a video```");
 }
 	if (message.content.startsWith(prefix + "logout")) {
 
@@ -317,7 +317,7 @@ if(message.author.id == "240508683455299584"){
 message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Math.round(client.ping).toFixed(0)}**`));
 } 
 	if (message.content.startsWith(prefix + "youtube-search")) {
-var args = message.content.split(" ")[1];
+var args = message.content.split(" ").slice(1).join(" ");
 const searchvideo = require("request-promise-native");
 if (!args) return message.channel.send("**:x: Error, please specify a title of video**");
 searchvideo("https://www.googleapis.com/youtube/v3/search?q="+encodeURIComponent(args)+"&type=video&part=snippet&key="+config.youtube_api_key).then(objet => { 
