@@ -166,6 +166,7 @@ if(!message.guild.member(message.author).hasPermission("ADMINISTRATOR")){return 
 let args = message.content.split(' ').slice(1);
 if(!args) return message.channel.send('**:x: Please, specify one prefix**')
 newprefix[message.guild.id] = {"prefix": args.join(" ")};
+message.channel.send("My new prefix is now `"+ args.join( "" ) + "` in this server :ok_hand:");
 fs.writeFile("./prefix.json", JSON.stringify(newprefix), (err) => {if (err) console.error(err);});
 }
 }
