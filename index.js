@@ -8,7 +8,6 @@ var RedisSessions = require("redis-sessions");
 var rs = new RedisSessions();
 var ffmpeg = require("ffmpeg");
 var search = require('youtube-search');
-var prefix = "&";
 var con = console.log;
 var moment = require("moment");
 var config = {   
@@ -149,9 +148,36 @@ console.log("MusicBOT by Sworder#4220");
 
                 return;
             }
+	  
+	    
+	    
+	   let newprefix = JSON.parse(fs.readFileSync("./prefix.json", "utf8"));
+var defaultprefix = '&';
+var mention = "<@376074681310117888>";
+var prefix;
+if(newprefix[message.guild.id]){
+var prefix = newprefix[message.guild.id].prefix;
+}else{
+var prefix = '&';
+}
+if(message.content.startsWith(prefix + "prefix")){
+if(!message.guild.member(message.author).hasPermission("ADMINISTRATOR")){return message.reply("**:x: You do not have the Administrator permission in this server**").catch(console.error);
+}else{
+let args = message.content.split(' ').slice(1);
+if(!args) return message.channel.send('**:x: Please, specify one prefix**')
+newprefix[message.guild.id] = {"prefix": args.join(" ")};
+fs.writeFile("./prefix.json", JSON.stringify(newprefix), (err) => {if (err) console.error(err);});
+}
+}
+if(message.content.startsWith(mention)){
+message.channel.send('My prefix is `' + prefix + '` in this server :smile:')
+}
+    
+	    
+	    
         if (message.content.startsWith(prefix + 'help')) {
 message.reply("Check your dm's");
-message.author.send("```Prefix = '&'\n\n play - for playing\n pause - for pause music\n resume - for resume music\n skip - for skip music\n queue - for watch the queue\n clearQ - for clear the queue\n youtube-search - for find more information about a video```");
+message.author.send("```Prefix = '"+prefix+"'\n\n play - for playing\n pause - for pause music\n resume - for resume music\n skip - for skip music\n queue - for watch the queue\n clearQ - for clear the queue\n youtube-search - for find more information about a video\n prefix - for change my prefix```");
 }
 	if (message.content.startsWith(prefix + "logout")) {
 
