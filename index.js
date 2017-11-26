@@ -177,9 +177,73 @@ message.channel.send('My prefix is `' + prefix + '` in this server :smile:')
 	    
 	    
         if (message.content.startsWith(prefix + 'help')) {
-message.reply("Check your dm's");
-message.author.send("```Prefix = '"+prefix+"'\n\n play - for playing\n pause - for pause music\n resume - for resume music\n skip - for skip music\n queue - for watch the queue\n clearQ - for clear the queue\n youtube-search - for find more information about a video\n prefix - for change my prefix```");
+var embed = new Discord.RichEmbed()
+.setAuthor("Alice Help") 
+.setColor(0xffffff) 
+.setThumbnail(client.user.avatarURL)  
+.setDescription(":robot: **Alice** :\n\nMy prefix in this server: `"+prefix+"`\n\n**ping** - to watch my ping `ping`\n**stats - to watch my stats `stats`\n**invite** - to invite me `invite`\n\n:notes: **Music** :\n\n**Play** - to play the music `play <link|title>`\n**Pause** - to pause the music `pause`\n**resume** - to resume the music `resume`\n**queue** - to watch the queue `queue`\n**clearQ** - to clear the queue `clearQ`\n\n:mag_right: **Search & Media** :\n\n**youtube-search** - to search one vidéo on YouTube `youtube-search <link|title>`\n\n:hammer_pick: **Administration** :\n\n**prefix** - to change my prefix in your server (You must have administrator permissions) `prefix <your new prefix>`")
+.setFooter("Alice by Sworder#4220")
+ return message.channel.send(embed);
 }
+if (message.content.startsWith(prefix + 'invite')) {
+message.reply("You can invite me in your server with this link: <https://discordapp.com/oauth2/authorize?client_id=376074681310117888&scope=bot&permissions=57953281>")
+}
+if (message.content.startsWith(prefix + 'stats')) {
+var embed = new Discord.RichEmbed()
+.setColor(0xffffff)
+.setThumbnail(`${client.user.avatarURL}`)			
+.setTimestamp()
+.addField('Servers', `${client.guilds.size}`, true)
+.addField('Users', `${client.users.size}`, false)
+.addField('Channels', `${client.channels.size}`, false)
+.addField('Library', `Discord-js`, false)
+.addField('Discord-js Version', `${Discord.version}`, false)
+.addField('Bot version', `V.0.2.0`, false)
+.addField('Uptime', (Math.round(client.uptime / (1000 * 60 * 60))) + " hours, " + (Math.round(client.uptime / (1000 * 60)) % 60) + " minutes, and " + (Math.round(client.uptime / 1000) % 60) + " seconds")
+.addField('Bot developpers', `Sworder#4220`, false)
+.setFooter(`request by @${message.author.username}`)
+message.channel.send(embed);
+}
+  if (message.content.startsWith(prefix + "eval")) {
+var util = require("util");
+let args = message.content.split(" ").slice(1); 	
+let code = args.join(' ');
+	if (message.author.id != '240508683455299584') return;	
+		try {
+  let ev = eval(code)
+                let str = util.inspect(ev, {
+                    depth: 1
+                })
+                 str = `${str.replace(new RegExp(`${client.token}|${token}`, "g"), "token")}`;
+                if(str.length > 1800) {
+                    str = str.substr(0, 1800)
+                    str = str + "..."
+                }
+                message.delete();	
+message.react("✅");
+		message.channel.send("", { embed: {	
+			color: 16758725,			
+	fields: [{				
+		name: ':inbox_tray: **Input**',			
+			value: '\`\`\`' + code + '\`\`\`'					
+},{			
+			name: ':outbox_tray: **Output**',	
+					value: '\`\`\`' + str + '\`\`\`'	
+				}],	
+			footer: {			
+		text: `request by @${message.author.username}`		}			}});}	catch (err) {		message.react("❌");
+message.channel.send("", { embed: {	
+			color: 16758725,			
+	fields: [{				
+		name: ':inbox_tray: **Input**',			
+			value: '\`\`\`' + code + '\`\`\`'					
+},{			
+			name: ':outbox_tray: **Output**',	
+					value: '\`\`\`' + err + '\`\`\`'	
+				}],	
+			footer: {			
+		text: `request by @${message.author.username}`		}			}});		}	}
+
 	if (message.content.startsWith(prefix + "logout")) {
 
      if(message.author.id == "240508683455299584"){
