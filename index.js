@@ -181,7 +181,7 @@ var embed = new Discord.RichEmbed()
 .setAuthor("Alice Help") 
 .setColor(0xffffff) 
 .setThumbnail(client.user.avatarURL)  
-.setDescription(":robot: **Alice** :\n\nMy prefix in this server: `"+prefix+"`\n\n**ping** - to watch my ping `ping`\n**stats** - to watch my stats `stats`\n**invite** - to invite me `invite`\n\n:notes: **Music** :\n\n**Play** - to play the music `play <link|title>`\n**Pause** - to pause the music `pause`\n**resume** - to resume the music `resume`\n**queue** - to watch the queue `queue`\n**clearQ** - to clear the queue `clearQ`\n\n:mag_right: **Search & Media** :\n\n**youtube-search** - to search one vidéo on YouTube `youtube-search <link|title>`\n\n:hammer_pick: **Administration** :\n\n**prefix** - to change my prefix in your server (You must have administrator permissions) `prefix <your new prefix>`")
+.setDescription(":robot: **Alice** :\n\nMy prefix in this server: `"+prefix+"`\n\n**ping** - to watch my ping `ping`\n**stats** - to watch my stats `stats`\n**invite** - to invite me `invite`\n\n:notes: **Music** :\n\n**play** - to play the music `play <link|title>`\n**pause** - to pause the music `pause`\n**resume** - to resume the music `resume`\n**queue** - to watch the queue `queue`\n**clearQ** - to clear the queue `clearQ`\n\n:mag_right: **Search & Media** :\n\n**youtube-search** - to search one vidéo on YouTube `youtube-search <link|title>`\n\n:hammer_pick: **Administration** :\n\n**prefix** - to change my prefix in your server (You must have administrator permissions) `prefix <your new prefix>`")
 .setFooter("Alice by Sworder#4220")
  return message.channel.send(embed);
 }
@@ -405,7 +405,7 @@ if(message.author.id == "240508683455299584"){
   }
 }   
 		   if (message.content.startsWith(prefix + "ping")) {
-message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Math.round(client.ping).toFixed(0)}**`));
+message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Math.round(client.ping).toFixed(0)}ms**`));
 } 
 	if (message.content.startsWith(prefix + "youtube-search")) {
 var args = message.content.split(" ").slice(1).join(" ");
