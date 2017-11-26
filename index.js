@@ -6,6 +6,7 @@ var errorlog = require("./errors.json")
 const yt = require('ytdl-core');
 var RedisSessions = require("redis-sessions");
 var rs = new RedisSessions();
+const token = process.env.TOKEN;
 var ffmpeg = require("ffmpeg-binaries");
 var search = require('youtube-search');
 var con = console.log;
@@ -181,7 +182,7 @@ var embed = new Discord.RichEmbed()
 .setAuthor("Alice Help") 
 .setColor(0xffffff) 
 .setThumbnail(client.user.avatarURL)  
-.setDescription(":robot: **Alice** :\n\nMy prefix in this server: `"+prefix+"`\n\n**ping** - to watch my ping `ping`\n**stats** - to watch my stats `stats`\n**invite** - to invite me `invite`\n\n:notes: **Music** :\n\n**play** - to play the music `play <link|title>`\n**pause** - to pause the music `pause`\n**resume** - to resume the music `resume`\n**queue** - to watch the queue `queue`\n**clearQ** - to clear the queue `clearQ`\n\n:mag_right: **Search & Media** :\n\n**youtube-search** - to search one video on YouTube `youtube-search <link|title>`\n\n:hammer_pick: **Administration** :\n\n**prefix** - to change my prefix in your server (You must have administrator permissions) `prefix <your new prefix>`")
+.setDescription(":robot: **Alice** :\n\nMy prefix in this server: `"+prefix+"`\n\n**ping** - to watch my ping `ping`\n**stats** - to watch my stats `stats`\n**invite** - to invite me `invite`\n\n:notes: **Music** :\n\n**play** - to play the music `play <link|title>`\n**pause** - to pause the music `pause`\n**resume** - to resume the music `resume`\n**volume** - to change the volume `volume <number 1;100>`\n**queue** - to watch the queue `queue`\n**clearQ** - to clear the queue `clearQ`\n\n:mag_right: **Search & Media** :\n\n**youtube-search** - to search one video on YouTube `youtube-search <link|title>`\n\n:hammer_pick: **Administration** :\n\n**prefix** - to change my prefix in your server (You must have administrator permissions) `prefix <your new prefix>`")
 .setFooter("Alice by Sworder#4220")
  return message.channel.send(embed);
 }
@@ -287,7 +288,7 @@ message.channel.send("", { embed: {
                message.member.voiceChannel.leave();
                 let queue = getQueue(message.guild.id);
                 
-                if (queue.length == 0) return message.channel.send(`No music in queue`).then(response => { response.delete(5000) });
+                if (queue.length == 0) return message.channel.send(`**Successfully leaved channel**`);
                 for (var i = queue.length - 1; i >= 0; i--) {
                     queue.splice(i, 1);
                 }
@@ -301,13 +302,13 @@ message.channel.send("", { embed: {
          
                 let queue = getQueue(message.guild.id);
                 
-                if (queue.length == 0) return message.channel.send(`No music in queue`).then(response => { response.delete(5000) });
+                if (queue.length == 0) return message.channel.send(`:x: **No music in queue**`).then(response => { response.delete(5000) });
                 
                 for (var i = queue.length - 1; i >= 0; i--) {
                     queue.splice(i, 1);
                 }
                 
-                message.channel.send(":wastebasket: Successfully cleared queue").then(response => { response.delete(5000) })
+                message.channel.send(":wastebasket: **Successfully cleared queue**");
                 
             }
         if (message.content.startsWith(prefix + 'skip')) {
@@ -315,7 +316,7 @@ message.channel.send("", { embed: {
         if (!message.member.voiceChannel) return message.channel.send('You need to be in a voice channel')
                 let player = message.guild.voiceConnection.player.dispatcher
                 if (!player || player.paused) return message.channel.send("Bot is not playing!").then(response => { response.delete(5000) });
-                message.channel.send(':fast_forward: Skipping song...').then(response => { response.delete(5000) });
+                message.channel.send(':fast_forward: **Skipping song...**');
                 player.end()
             
 
@@ -328,7 +329,7 @@ message.channel.send("", { embed: {
                     let player = message.guild.voiceConnection.player.dispatcher
                     if (!player || player.paused) return message.channel.send("Bot is not playing!").then(response => { response.delete(5000) });
                     player.pause();
-                    message.channel.send(":pause_button: Pausing Music...").then(response => { response.delete(5000) });
+                    message.channel.send("**:pause_button: Pausing Music...**");
                 
                
             } 
@@ -336,20 +337,20 @@ message.channel.send("", { embed: {
          let suffix = message.content.split(" ")[1];
                         
             var player = message.guild.voiceConnection.player.dispatcher
-            if (!player || player.paused) return message.channel.send('No music m8, queue something with `' + prefix + 'play`');
+            if (!player || player.paused) return message.channel.send(':x: **No music in queue, to play** : `' + prefix + 'play`');
             
             if (!suffix) {
 var player = message.guild.voiceConnection.player.dispatcher
                 
-                message.channel.send(`The current volume is ${(player.volume * 100)}`).then(response => { response.delete(5000) });
+                message.channel.send(`The current volume is ${(player.volume * 100)}`);
                 
             } var player = message.guild.voiceConnection.player.dispatcher
                 let volumeBefore = player.volume
                 let volume = parseInt(suffix);
                 
-                if (volume > 100) return message.channel.send("The music can't be higher then 100").then(response => { response.delete(5000) });
+                if (volume > 100) return message.channel.send(":x:**The music can't be higher then 100**").then(response => { response.delete(5000) });
                 player.setVolume((volume / 100));
-                 message.channel.send(":speaker: **Volume changed to** `"+ volume + "`").then(response => { response.delete(5000) });
+                 message.channel.send(":speaker: **Volume changed to** `"+ volume + "`");
                 
             }
         
@@ -359,14 +360,14 @@ var player = message.guild.voiceConnection.player.dispatcher
                 
                 if (!message.member.voiceChannel) return message.channel.send('You need to be in a voice channel').then(response => { response.delete(5000) });
                 let players = message.guild.voiceConnection.player.dispatcher
-                if (!players) return message.channel.send('No music is playing at this time.').then(response => { response.delete(5000) });
-                if (players.playing) return message.channel.send('The music is already playing').then(response => { response.delete(5000) });
+                if (!players) return message.channel.send('**:x: No music is playing at this time.**').then(response => { response.delete(5000) });
+                if (players.playing) return message.channel.send('**:x: The music is already playing**').then(response => { response.delete(5000) });
                 
                 var queue = getQueue(message.guild.id);
            
                 players.resume();
                 
-                message.channel.send(":arrow_forward: **Resuming music...**").then(response => { response.delete(5000) });
+                message.channel.send(":arrow_forward: **Resuming music...**");
                 
             } 
       
@@ -374,7 +375,7 @@ var player = message.guild.voiceConnection.player.dispatcher
         if (message.content.startsWith(prefix + 'queue')) {
           let queue = getQueue(message.guild.id);
             
-            if (queue.length == 0) return message.channel.send("No music in queue");
+            if (queue.length == 0) return message.channel.send(":x: **No music in queue**");
             let text = '';
             for (let i = 0; i < queue.length; i++) {
                 text += `${(i + 1)}. ${queue[i].title} | Requested by ${queue[i].requested}\n`
