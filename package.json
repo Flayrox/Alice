@@ -28,6 +28,7 @@
     "youtube-search": "^1.0.10",
     "ytdl-core": "^0.18.1",
     "request-promise-native": "^1.0.5",
-    "ffmpeg-binaries": "^3.2.2-3"
+    "ffmpeg-binaries": "^3.2.2-3",
+    "snekfetch": "^3.6.0"
   }
 }
