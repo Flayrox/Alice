@@ -46,7 +46,28 @@ app.get("/queue/:guildid",function(req,res){
   res.send(text)
 })
         
-var paused = {};
+
+            
+var util = require('util');
+var youtube_node = require('youtube-node');
+
+
+
+var request = require('request')
+
+client.on("ready", () => {
+
+
+client.user.setGame("&help | BOT music");
+client.user.setStatus("online");
+	console.log("--------------------------------------");
+console.log("MusicBOT by Sworder#4220");
+});
+
+
+
+            client.on("message", function(message) {
+		    var paused = {};
 function play(message, queue, song) {
     try {
         if (!message || !queue) return;
@@ -70,9 +91,13 @@ function play(message, queue, song) {
       
                 console.log("Queued " + queue[queue.length - 1].title + " in " + message.guild.name + " as requested by " + queue[queue.length - 1].requested)
             
+if(message.content.includes(`${prefix}repeat`)){     
+   message.channel.send("**:ballot_box_with_check: Re-add to queue - ** `" + queue[queue.length - 1].title + "`");
+}else{
 message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(6) + "`");
                 message.channel.send("**:ballot_box_with_check: Add to queue - ** `" + queue[queue.length - 1].title + "`");
-                if (test) {
+}
+		    if (test) {
                     setTimeout(function() {
                         play(message, queue)
                     }, 1000)
@@ -90,8 +115,7 @@ message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(
                 queue.shift()
                 play(message, queue)
             })
-
-            intent.on('end', () => {	
+intent.on('end', () => {	
        setTimeout(() => {
           if (queue.length > 0) { 
               queue.shift()
@@ -120,25 +144,6 @@ message.channel.send("**:mag_right: Searching  - ** `" + message.content.substr(
     }
 }
 
-var util = require('util');
-var youtube_node = require('youtube-node');
-
-
-
-var request = require('request')
-
-client.on("ready", () => {
-
-
-client.user.setGame("&help | BOT music");
-client.user.setStatus("online");
-	console.log("--------------------------------------");
-console.log("MusicBOT by Sworder#4220");
-});
-
-
-
-            client.on("message", function(message) {
     const messagea = message.content
     try {
 		if (message.channel.type === "dm") return;
@@ -182,7 +187,7 @@ var embed = new Discord.RichEmbed()
 .setAuthor("Alice Help") 
 .setColor(0xffffff) 
 .setThumbnail(client.user.avatarURL)  
-.setDescription(":robot: **Alice** :\n\nMy prefix in this server: `"+prefix+"`\n\n**ping** - to watch my ping `ping`\n**stats** - to watch my stats `stats`\n**invite** - to invite me `invite`\n\n:notes: **Music** :\n\n**play** - to play the music `play <link|title>`\n**pause** - to pause the music `pause`\n**resume** - to resume the music `resume`\n**volume** - to change the volume `volume <number 1;100>`\n**queue** - to watch the queue `queue`\n**clearQ** - to clear the queue `clearQ`\n\n:mag_right: **Search & Media** :\n\n**youtube-search** - to search one video on YouTube `youtube-search <link|title>`\n\n:hammer_pick: **Administration** :\n\n**prefix** - to change my prefix in your server (You must have administrator permissions) `prefix <your new prefix>`")
+.setDescription(":robot: **Alice** :\n\nMy prefix in this server: `"+prefix+"`\n\n**ping** - to watch my ping `ping`\n**stats** - to watch my stats `stats`\n**invite** - to invite me `invite`\n\n:notes: **Music** :\n\n**play** - to play the music `play <link|title>`\n**pause** - to pause the music `pause`\n**resume** - to resume the music `resume`\n**repeat** - to repeat the first music of the queue `repeat`\n**volume** - to change the volume `volume <number 1;100>`\n**queue** - to watch the queue `queue`\n**clearQ** - to clear the queue `clearQ`\n\n:mag_right: **Search & Media** :\n\n**youtube-search** - to search one video on YouTube `youtube-search <link|title>`\n\n:hammer_pick: **Administration** :\n\n**prefix** - to change my prefix in your server (You must have administrator permissions) `prefix <your new prefix>`")
 .setFooter("Alice by Sworder#4220")
  return message.channel.send(embed);
 }
@@ -275,6 +280,15 @@ message.channel.send("", { embed: {
             
 
             play(message, getQueue(message.guild.id), suffix)
+        }
+	    if (message.content.startsWith(prefix + 'repeat')) {
+let queue = getQueue(message.guild.id);
+            var player = message.guild.voiceConnection.player.dispatcher
+            if (!player || player.paused) return message.channel.send('No music m8, queue something with `' + prefix + 'play`');
+                if (queue.length == 0) return message.channel.send(`No music in queue`).then(response => { response.delete(5000) });
+                if (!message.member.voiceChannel) return message.channel.send('You need to be in a voice channel')
+                
+            play(message, getQueue(message.guild.id), queue[0].link)
         }
         if (message.content.startsWith(prefix + 'leave')) {
 
