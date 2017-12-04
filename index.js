@@ -211,6 +211,24 @@ var embed = new Discord.RichEmbed()
 .setFooter(`request by @${message.author.username}`)
 message.channel.send(embed);
 }
+	    if(message.content.startsWith(prefix + "debug")){
+		var os = require('os');
+                var embed = new Discord.RichEmbed()
+	.setColor(0xffffff)			
+        .addField('Full name', `${client.user.tag}`, false)
+		addField('ID', `${client.user.id}`, false)
+		.addField('Descriminator', `#${client.user.discriminator}`, false)
+.addField('Servers count', `${client.guilds.size}`, true)
+.addField('Bot version', `V0.0.1`, false)
+.addField('Bot developpers', `Sworder#4220`, false)
+.addField('OS', `${process.platform}`, false)
+.addField('Config', `(${os.arch()}) ${os.cpus()[0].model} @ ${os.cpus()[0].speed} MHz`, false)
+.addField('PID', `${process.pid}`, false)
+.addField('RAM', `${Math.round(process.memoryUsage().heapUsed / 1000000)}`, false)
+			.addField('Uptime', (Math.round(client.uptime / (1000 * 60 * 60))) + " hours, " + (Math.round(client.uptime / (1000 * 60)) % 60) + " minutes, and " + (Math.round(client.uptime / 1000) % 60) + " seconds")
+		.addField('Lib', `Discord.js ${Discord.version}`, false)
+message.channel.send(embed);
+		    }
   if (message.content.startsWith(prefix + "eval")) {
 var util = require("util");
 let args = message.content.split(" ").slice(1); 	
