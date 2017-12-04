@@ -216,7 +216,7 @@ message.channel.send(embed);
                 var embed = new Discord.RichEmbed()
 	.setColor(0xffffff)			
         .addField('Full name', `${client.user.tag}`, false)
-		addField('ID', `${client.user.id}`, false)
+		.addField('ID', `${client.user.id}`, false)
 		.addField('Descriminator', `#${client.user.discriminator}`, false)
 .addField('Servers count', `${client.guilds.size}`, true)
 .addField('Bot version', `V0.0.1`, false)
