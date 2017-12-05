@@ -473,7 +473,7 @@ var embed = new Discord.RichEmbed()
 	if(message.content.startsWith(prefix + 'yoda')){
 const text = message.content.split(" ").slice(1).join(" ")
 if(!text) return message.channel.send('**:x: Please, talk to me héhé**'); 
-const URL = snekfetch.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${text}`).then(body => {
+const URL  snekfetch.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${text}`).then(body => {
 		message.channel.send(JSON.parse(body).yodish);});
 }
 		    
