@@ -63,7 +63,7 @@ snekfetch.post(`https://discordbot.takohell.com/api/v1/bots/${client.user.id}`, 
 server_shard: '1'})
       .catch(r => console.log('[Discordbot.takohell.com] Failed to update!', r.body));
 
-snekfetch.post(`https://discordbots.org/api/bots/{client.user.id}/stats`, { headers: { Authorization: process.env.DBLORG } })
+snekfetch.post(`https://discordbots.org/api/bots/${client.user.id}/stats`, { headers: { Authorization: process.env.DBLORG } })
       .send({ server_count: client.guilds.size})
       .catch(r => console.log('[Discordbot.org] Failed to update!', r.body));
 
