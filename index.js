@@ -57,7 +57,15 @@ var youtube_node = require('youtube-node');
 var request = require('request')
 
 client.on("ready", () => {
+	
+snekfetch.post(`https://discordbot.takohell.com/api/v1/bots/${client.user.id}`, { headers: { Authorization: process.env.DBLFR } })
+      .send({ server_count: client.guilds.size,
+server_shard: '1'})
+      .catch(r => console.log('[Discordbot.takohell.com] Failed to update!', r.body));
 
+snekfetch.post(`https://discordbots.org/api/bots/{client.user.id}/stats`, { headers: { Authorization: process.env.DBLORG } })
+      .send({ server_count: client.guilds.size})
+      .catch(r => console.log('[Discordbot.org] Failed to update!', r.body));
 
 client.user.setGame("&help | BOT music");
 client.user.setStatus("online");
@@ -189,6 +197,7 @@ var embed = new Discord.RichEmbed()
 .setColor(0xffffff) 
 .setThumbnail(client.user.avatarURL)  
 .setDescription(":robot: **Alice** :\n\nMy prefix in this server: `"+prefix+"`\n\n**ping** - to watch my ping `ping`\n**stats** - to watch my stats `stats`\n**invite** - to invite me `invite`\n\n:notes: **Music** :\n\n**play** - to play the music `play <link|title>`\n**pause** - to pause the music `pause`\n**resume** - to resume the music `resume`\n**repeat** - to repeat the first music of the queue `repeat`\n**volume** - to change the volume `volume <number 1;100>`\n**queue** - to watch the queue `queue`\n**clearQ** - to clear the queue `clearQ`\n\n:mag_right: **Search & Media** :\n\n**youtube-search** - to search one video on YouTube `youtube-search <link|title>`\n\n:hammer_pick: **Administration** :\n\n**prefix** - to change my prefix in your server (You must have administrator permissions) `prefix <your new prefix>`")
+.addField('**FUN**', '**yoda** - to talk to me héhé `yoda`')
 .setFooter("Alice by Sworder#4220")
  return message.channel.send(embed);
 }
@@ -459,7 +468,15 @@ var embed = new Discord.RichEmbed()
 .addField("Duration", videoInfo.items[0].contentDetails.duration.toString().replace(/["PT", "S"]/g, "").replace("H", ":").replace("M", ":"), true)
 .addField("URL", "https://www.youtube.com/watch?v="+ytvideo.items[0].id.videoId);
  return message.channel.send(embed); }); });
-} 	    
+} 
+		    
+	if(message.content.startsWith(prefix + 'yoda')){
+const text = args.join(' ');
+if(!text) return message.channel.send('**:x: Please, talk to me héhé**'); 
+const URL = snekfetch.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(URL.toLowerCase())}`); 
+		message.channel.send(JSON.parse(URL).yodish);
+}
+		    
 });
 
 
