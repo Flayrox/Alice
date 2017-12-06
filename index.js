@@ -199,7 +199,9 @@ var embed = new Discord.RichEmbed()
 .addField(':notes: **Music** :', '**play** - to play the music `play <link|title>`\n**pause** - to pause the music `pause`\n**resume** - to resume the music `resume`\n**repeat** - to repeat the first music of the queue `repeat`\n**volume** - to change the volume `volume <number 1;100>`\n**queue** - to watch the queue `queue`\n**clearQ** - to clear the queue `clearQ`\n\n:mag_right: **Search & Media** :\n\n**youtube-search** - to search one video on YouTube `youtube-search <link|title>`')
 .addField(':hammer_pick: **Administration** :', '**prefix** - to change my prefix in your server (You must have administrator permissions) `prefix <your new prefix>`")')
 .addField(':video_game: **FUN** :', '**yoda** - to talk to me héhé `yoda`')
-.setFooter("Alice by Sworder#4220") return message.channel.send(embed);}
+.setFooter("Alice by Sworder#4220")
+message.channel.send(embed);
+	}
 if (message.content.startsWith(prefix + 'invite')) {
 message.reply("You can invite me in your server with this link: <https://discordapp.com/oauth2/authorize?client_id=376074681310117888&scope=bot&permissions=57953281>")
 }
