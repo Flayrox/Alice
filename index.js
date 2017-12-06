@@ -471,24 +471,15 @@ var embed = new Discord.RichEmbed()
 } 
 		    
 	if (message.content.startsWith(prefix + "yoda")){
-let args = message.content.split(" ").slice(1); 	
-let args1 = args.join(' ');
-var unirest = require("unirest");
-var url = 'http://api.funtranslations.com/translate/yoda.json?text=' + args1;
-        unirest.get(url).headers({
-            "Accept": "application/json",
-            "User-Agent": "Unirest Node.js"
-        }).end(res => {
-
-            if (res.status == 200 && res.body) {
-                res = JSON.parse(res.body).contents.translated;
-            } else {
-                res = "Ohé. Héhé.";
-            }
-            message.channel.send(res);
-
-        });
-    }
+const yoda = require("request-promise-native");
+let args = message.content.split(" ").slice(1);
+ 	let args1 = args.join(' ');
+if(!args) return message.channel.send('Please talk to me héhé.');
+ yoda(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(args1)}`).then(body => { 
+body = JSON.parse(body).yodish;
+message.channel.send(body); 
+});
+ }
 		    
 });
 
