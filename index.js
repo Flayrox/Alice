@@ -449,7 +449,8 @@ if(message.author.id == "240508683455299584"){
   }
 }   
 		   if (message.content.startsWith(prefix + "ping")) {
-message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Math.round(client.ping).toFixed(0)}ms**`));
+			let startTime = Date.now();
+message.channel.send("pong = wait...").then(msg => msg.edit(`**pong :ping_pong: = ${Date.now() - startTime}ms**`));
 } 
 	if (message.content.startsWith(prefix + "youtube-search")) {
 var args = message.content.split(" ").slice(1).join(" ");
