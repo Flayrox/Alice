@@ -470,12 +470,25 @@ var embed = new Discord.RichEmbed()
  return message.channel.send(embed); }); });
 } 
 		    
-	if(message.content.startsWith(prefix + 'yoda')){
-const text = message.content.split(" ").slice(1).join(" ")
-if(!text) return message.channel.send('**:x: Please, talk to me héhé**'); 
- snekfetch.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${text}`).then(body => {
-		message.channel.send(JSON.parse(body).yodish);});
-}
+	if (message.content.startsWith(prefix + "yoda")){
+var args = message.content.split(" ").slice(1);
+const args1 = args.join(' '); 
+var unirest = require("unirest");
+var url = 'http://yoda-api.appspot.com/api/v1/yodish?text='+encodeURIComponent(args1.toLowerCase());
+        unirest.get(url).headers({
+            "Accept": "application/json",
+            "User-Agent": "Unirest Node.js"
+        }).end(res => {
+
+            if (res.status == 200 && res.body) {
+                res = JSON.parse(res.body).yodish;
+            } else {
+                res = "Ohé. Héhé.";
+            }
+            message.channel.send(res);
+
+        });
+    }
 		    
 });
 
