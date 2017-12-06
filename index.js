@@ -474,7 +474,7 @@ var embed = new Discord.RichEmbed()
 var args = message.content.split(" ").slice(1);
 const args1 = args.join(' '); 
 var unirest = require("unirest");
-var url = 'http://yoda-api.appspot.com/api/v1/yodish?text='+encodeURIComponent(args1.toLowerCase());
+var url = 'http://api.funtranslations.com/translate/yoda.json?text='+encodeURIComponent(args1.toLowerCase());
         unirest.get(url).headers({
             "Accept": "application/json",
             "User-Agent": "Unirest Node.js"
