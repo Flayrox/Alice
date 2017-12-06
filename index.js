@@ -481,7 +481,7 @@ var url = 'http://api.funtranslations.com/translate/yoda.json?text='+encodeURICo
         }).end(res => {
 
             if (res.status == 200 && res.body) {
-                res = JSON.parse(res.body).yodish;
+                res = JSON.parse(res.body).translated;
             } else {
                 res = "Ohé. Héhé.";
             }
